@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+
+public class Player : MonoBehaviour
+{
+    public GameObject sword;
+
+    public float speed = 2f;
+
+    private float originalXScale;
+    private SpriteRenderer swordRenderer;
+
+    private IInteractable interactableGameObject;
+
+    private void Awake()
+    {
+        originalXScale = transform.localScale.x;
+        swordRenderer = sword.GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            interactableGameObject?.Interact();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        int x = (int)Input.GetAxisRaw("Horizontal");
+        int y = (int)Input.GetAxisRaw("Vertical");   
+
+        Vector3 direction = new Vector3(x, y, 0);
+
+        if (x != 0)
+        {
+            transform.localScale = new Vector3(originalXScale* Mathf.Sign(x), transform.localScale.y, transform.localScale.z);
+        }
+
+        transform.position+= direction* speed * Time.deltaTime;
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+      
+        var interactable = collision.gameObject.GetComponent<IInteractable>();
+
+            if(interactable != null && interactableGameObject != interactable)
+            interactableGameObject = interactable;
+
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        interactableGameObject = null;
+    }
+
+
+
+    public void BuySword()
+    {
+        GameManager.instance.playerCoins -= GameManager.instance.swords[GameManager.instance.currentSwordId].price;
+        UpdateSwordSkin();
+    }
+    private void UpdateSwordSkin()
+    {
+        swordRenderer.sprite = GameManager.instance.swords[GameManager.instance.currentSwordId].skin;
+    }
+}
