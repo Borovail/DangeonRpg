@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
+    //переделать всё под триггер зоны
+
+
+
+
     public bool isClosed = true;
 
     public Sprite closedDoor;
