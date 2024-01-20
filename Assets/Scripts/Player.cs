@@ -5,19 +5,22 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
-    public GameObject sword;
+    public GameObject swordObject;
 
     public float speed = 2f;
 
     private float originalXScale;
     private SpriteRenderer swordRenderer;
+    private Sword sword;
 
     private IInteractable interactableGameObject;
 
     private void Awake()
     {
         originalXScale = transform.localScale.x;
-        swordRenderer = sword.GetComponent<SpriteRenderer>();
+        swordRenderer = swordObject.GetComponent<SpriteRenderer>();
+        sword = swordObject.GetComponent<Sword>();
+
     }
 
     private void Update()
@@ -25,6 +28,11 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             interactableGameObject?.Interact();
+        }
+
+        if(Input.GetKeyDown(KeyCode.G)) 
+        {
+          sword.Attack();
         }
     }
 

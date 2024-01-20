@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IAttackable
 {
     public float triggerRange;
     public float chaseRange;
@@ -30,11 +27,6 @@ public class Monster : MonoBehaviour
         contactFilter.SetLayerMask(playerLayer);
         contactFilter.useLayerMask = true;
         collidersResult = new Collider2D[1];
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -77,6 +69,9 @@ public class Monster : MonoBehaviour
     }
 
 
-
-
+   public void GetHit(float damage)
+    {
+        Debug.Log(gameObject.name + " get hit with: " + damage+ " damage");
+        GetComponent<PushAble>().Push(Vector2.left,2);
+    }
 }
