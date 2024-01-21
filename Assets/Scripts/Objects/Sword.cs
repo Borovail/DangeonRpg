@@ -10,7 +10,6 @@ public class Sword : MonoBehaviour
     private Collider2D _collider;
 
     private IAttackable attackableObject;
-    private bool isColliding =false;
 
 
     private void Awake()

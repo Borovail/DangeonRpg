@@ -30,9 +30,19 @@ public class Player : MonoBehaviour
             interactableGameObject?.Interact();
         }
 
-        if(Input.GetKeyDown(KeyCode.G)) 
+        if(Input.GetKeyDown(KeyCode.Space)) 
         {
           sword.Attack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            FloatingTextManager.instance.Show("Pidor Up",12,Color.red,transform.position,Vector3.up,5f,FloatingTextType.UIRelativeFloatingText);   
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            FloatingTextManager.instance.Show("Pidor Down", 12, Color.red, transform.position, Vector3.down, 5f,FloatingTextType.WorldSpaceFloatingText ); 
         }
     }
 
