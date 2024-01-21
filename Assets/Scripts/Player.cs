@@ -37,12 +37,12 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            FloatingTextManager.instance.Show("Pidor Up",12,Color.red,transform.position,Vector3.up,5f,FloatingTextType.UIRelativeFloatingText);   
+            FloatingTextManager.instance.Show(new FloatingTextSettings("Pidor Up", 5f ,12,Color.red, Vector3.up,transform.position,FloatingTextType.UIRelativeFloatingText));   
         }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            FloatingTextManager.instance.Show("Pidor Down", 12, Color.red, transform.position, Vector3.down, 5f,FloatingTextType.WorldSpaceFloatingText ); 
+            FloatingTextManager.instance.Show(new FloatingTextSettings("Pidor Down", 5f, 12, Color.red, Vector3.down, transform.position, FloatingTextType.WorldSpaceFloatingText )); 
         }
     }
 
