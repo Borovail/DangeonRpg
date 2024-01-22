@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class Player : MonoBehaviour
 
     public float speed = 2f;
 
+    public event Action OnAttackEnd;
+
+    private bool isAttacking = false;
     private float originalXScale;
     private SpriteRenderer swordRenderer;
     private Sword sword;
@@ -30,9 +34,10 @@ public class Player : MonoBehaviour
             interactableGameObject?.Interact();
         }
 
-        if(Input.GetKeyDown(KeyCode.Space)) 
+        if(Input.GetKeyDown(KeyCode.Space) && !isAttacking) 
         {
           sword.Attack();
+            isAttacking = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -87,5 +92,12 @@ public class Player : MonoBehaviour
     private void UpdateSwordSkin()
     {
         swordRenderer.sprite = GameManager.instance.swords[GameManager.instance.currentSwordId].skin;
+    }
+
+   
+    public void OnAttackAnimationEnd()
+    {
+        isAttacking = false;
+        OnAttackEnd?.Invoke();
     }
 }

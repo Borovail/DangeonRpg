@@ -69,9 +69,9 @@ public class Monster : MonoBehaviour, IAttackable
     }
 
 
-   public void GetHit(float damage)
+   public void GetHit(float damage,float pushForce)
     {
         Debug.Log(gameObject.name + " get hit with: " + damage+ " damage");
-        GetComponent<PushAble>().Push(Vector2.left,2);
+        GetComponent<PushAble>().Push(Vector2.left, pushForce);
     }
 }

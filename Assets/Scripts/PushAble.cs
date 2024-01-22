@@ -15,13 +15,14 @@ public class PushAble : MonoBehaviour
 
     public void Push(Vector2 direction,float pushForce)
     {
+        pushTime = 0f;
         targetPosition = (Vector2)transform.position + direction.normalized * (pushForce * (1-pushResistance));
         StartCoroutine(PushRoutine());
     }
 
     private IEnumerator PushRoutine()
     {
-        if (pushTime < pushDuration)
+        while (pushTime < pushDuration)
         {
             pushTime += Time.deltaTime;
             transform.position = Vector3.Lerp(transform.position, targetPosition, pushTime/pushDuration);
