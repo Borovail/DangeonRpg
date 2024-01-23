@@ -2,9 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IAttackable
 {
     public GameObject swordObject;
 
@@ -15,6 +14,7 @@ public class Player : MonoBehaviour
     private bool isAttacking = false;
     private float originalXScale;
     private SpriteRenderer swordRenderer;
+    private SpriteRenderer playerRenderer;
     private Sword sword;
 
     private IInteractable interactableGameObject;
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     {
         originalXScale = transform.localScale.x;
         swordRenderer = swordObject.GetComponent<SpriteRenderer>();
+        playerRenderer = GetComponent<SpriteRenderer>();
         sword = swordObject.GetComponent<Sword>();
 
     }
@@ -99,5 +100,38 @@ public class Player : MonoBehaviour
     {
         isAttacking = false;
         OnAttackEnd?.Invoke();
+    }
+
+    public void GetHit(float damage, float pushForce)
+    {
+        GetComponent<PushAble>().Push(Vector2.right,pushForce);
+
+        if(GameManager.instance.playerArmor >0)
+        {
+            GameManager.instance.playerArmor -= 1;
+            UIManager.instance.RemovePlayerArmor();
+            StartCoroutine(GetHitAnimation(Color.cyan));
+
+            return;
+        }
+
+        if(GameManager.instance.playerHealth - damage <=0)
+        {
+            GameManager.instance.playerHealth = 0;
+            UIManager.instance.RemovePlayerHp();
+            Destroy(gameObject);
+            return;
+        }
+
+       GameManager.instance.playerHealth -= damage;
+        UIManager.instance.RemovePlayerHp();
+        StartCoroutine(GetHitAnimation(Color.red));
+    }
+
+    private IEnumerator GetHitAnimation(Color color)
+    {
+        playerRenderer.color = color;
+        yield return new WaitForSeconds(0.5f);
+        playerRenderer.color = Color.white;
     }
 }

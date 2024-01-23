@@ -93,7 +93,11 @@ public class GameManager : MonoBehaviour
     //Player
     public Player player;
     public int playerCoins;
-    public int playerHealth;
+    public float playerHealth;
+    public float playerArmor;
+
+
+
 
 
 

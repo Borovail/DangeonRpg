@@ -7,13 +7,23 @@ public class Monster : MonoBehaviour, IAttackable
     public float chaseSpeed;
     public float returningSpeed;
 
+    public float currentHp;
+    public float maxHp;
+
+    public float attackDamage =1;
+    public float attackPushForce = 0.3f;
+
+
     public LayerMask playerLayer;
 
     private Vector3 triggerPoint;
     private Vector3 chaseDirection;
     private Vector3 playerPosition;
 
+    public HealthBar healtBar;
 
+
+    public float attackCooldown =1f;
     private bool isTriggered = false;
 
     private Collider2D monsterCollider;
@@ -51,7 +61,20 @@ public class Monster : MonoBehaviour, IAttackable
     private void ChasePlayer()
     {
        int  collidersCount= Physics2D.OverlapCollider(monsterCollider, contactFilter, collidersResult);
-        if (collidersCount != 0) return;
+        if (collidersCount != 0)
+        {
+            if(attackCooldown<=0)
+            {
+                collidersResult[0].GetComponent<IAttackable>().GetHit(attackDamage, attackPushForce);
+
+                attackCooldown = 0.5f;
+            }
+            else
+            {
+                attackCooldown -= Time.deltaTime;
+            }
+            return;
+        }
 
            chaseDirection = (playerPosition - transform.position).normalized;
             transform.position += chaseDirection * chaseSpeed * Time.deltaTime;
@@ -60,6 +83,7 @@ public class Monster : MonoBehaviour, IAttackable
 
     private void ReturnToTriggerPoint()
     {
+        attackCooldown = 0.5f;
         chaseDirection = (triggerPoint - transform.position).normalized;
         transform.position += chaseDirection * returningSpeed * Time.deltaTime;
 
@@ -71,7 +95,15 @@ public class Monster : MonoBehaviour, IAttackable
 
    public void GetHit(float damage,float pushForce)
     {
-        Debug.Log(gameObject.name + " get hit with: " + damage+ " damage");
+        if(currentHp-damage<=0)
+        {
+            Destroy(gameObject);
+            Destroy(healtBar.gameObject);
+            return;
+        }
+
+        currentHp -= damage;
+       healtBar.ChangeHealth(currentHp, maxHp);
         GetComponent<PushAble>().Push(Vector2.left, pushForce);
     }
 }
