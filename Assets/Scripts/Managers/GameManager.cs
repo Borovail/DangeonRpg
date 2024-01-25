@@ -5,19 +5,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager instance;
+    public event Action<int> OnPlayerCoinsChanged;
 
-    private void Awake()
+    public void PlayerCoinsChanged(int amount)
     {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-
-        instance = this;
+        OnPlayerCoinsChanged?.Invoke(amount);
     }
+    
+
+
 
     public void RestartGame()
     {
@@ -47,8 +45,8 @@ public class GameManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        if( clickCounter == phrases.Length)   return;
-        
+        if (clickCounter == phrases.Length) return;
+
         System.Random random = new System.Random();
         Vector3 motion = Vector3.zero;
 
@@ -70,7 +68,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        FloatingTextManager.instance.Show(new FloatingTextSettings(phrases[clickCounter], 5f, 20, Color.red,motion/3, position.position, FloatingTextType.WorldSpaceFloatingText));
+        FloatingTextManager.Instance.Show(new FloatingTextSettings(phrases[clickCounter], 5f, 20, Color.red, motion / 3, position.position, FloatingTextType.WorldSpaceFloatingText));
 
         clickCounter++;
 
@@ -88,18 +86,6 @@ public class GameManager : MonoBehaviour
         QuitGame();
     }
     //Temporary solution
-
-
-    //Player
-    public Player player;
-    public int playerCoins;
-    public float playerHealth;
-    public float playerArmor;
-
-
-
-
-
 
 
 

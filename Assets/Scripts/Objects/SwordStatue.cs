@@ -16,12 +16,12 @@ public class SwordStatue :MonoBehaviour
 
     private void SetSword()
     {
-        sword.sprite = GameManager.instance.swords[GameManager.instance.currentSwordId].skin;
+        sword.sprite = GameManager.Instance.swords[GameManager.Instance.currentSwordId].skin;
     }
 
     private void SetPrice()
     {
-        upgradePrice.text = GameManager.instance.swords[GameManager.instance.currentSwordId].price.ToString();
+        upgradePrice.text = GameManager.Instance.swords[GameManager.Instance.currentSwordId].price.ToString();
     }
 
     private void SetMaxPrice()
@@ -31,18 +31,18 @@ public class SwordStatue :MonoBehaviour
         upgradePrice.text = "MAX";
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
-        if (GameManager.instance.swords.Length == GameManager.instance.currentSwordId+1)
+        if (GameManager.Instance.swords.Length == GameManager.Instance.currentSwordId+1)
         {
             SetMaxPrice();
             return;
         }
 
-        if (GameManager.instance.swords[GameManager.instance.currentSwordId].price <= GameManager.instance.playerCoins)
+        if (GameManager.Instance.swords[GameManager.Instance.currentSwordId].price <=player.Coins)
         {
-            GameManager.instance.player.BuySword();
-            GameManager.instance.currentSwordId++;
+            player.BuySword();
+            GameManager.Instance.currentSwordId++;
 
             SetSword();
             SetPrice();

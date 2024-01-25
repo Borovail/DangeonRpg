@@ -1,5 +1,5 @@
 ﻿public interface IAttackable
 {
-     void GetHit(float damage,float pushForce);
+     void GetHit(int damage,float pushForce);
 }
 

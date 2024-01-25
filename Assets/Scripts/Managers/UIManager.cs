@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
-
     public Text playerCoins;
 
     public GridLayoutGroup playerHealthBar;
@@ -15,59 +12,40 @@ public class UIManager : MonoBehaviour
     public GridLayoutGroup playerArmorBar;
     public Image playerArmorPrefab;
 
-
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-
-        instance = this;
-    }
+    public Player Player;
 
     private void Start()
     {
-        for (int i = 0; i < GameManager.instance.playerHealth; i++)
-        {
-            AddPlayerHp();
-        }
+        Player.OnHealthChanged += (health) => UpdatePlayerAttribute(health, playerHealthBar, playerHealthPrefab);
+        Player.OnArmorChanged += (armor) => UpdatePlayerAttribute(armor, playerArmorBar, playerArmorPrefab);
+        GameManager.Instance.OnPlayerCoinsChanged +=(amount)=> UpdatePlayerCoins(amount);
 
-        for (int i = 0; i < GameManager.instance.playerArmor; i++)
-        {
-            AddPlayerArmor();
-        }
-
-        UpdatePlayerCoins(GameManager.instance.playerCoins);
+        UpdatePlayerAttribute(Player.Health, playerHealthBar, playerHealthPrefab);
+        UpdatePlayerAttribute(Player.Armor, playerArmorBar, playerArmorPrefab);
+        UpdatePlayerCoins(Player.Coins);
     }
 
+    private void UpdatePlayerAttribute(int value, GridLayoutGroup bar, Image prefab)
+    {
+        int currentCount = bar.transform.childCount;
+        int requiredCount = Mathf.Clamp(value, 0, int.MaxValue);
 
+        for (int i = currentCount; i != requiredCount;)
+        {
+            if (i < requiredCount)
+            {
+                Instantiate(prefab, bar.transform);
+                i++;
+            }
+            else
+            {
+                Destroy(bar.transform.GetChild(--i).gameObject);
+            }
+        }
+    }
 
-    public void UpdatePlayerCoins(int coins)
+    private void UpdatePlayerCoins(int coins)
     {
         playerCoins.text = coins.ToString();
     }
-
-    public void AddPlayerHp()
-    {
-      Instantiate(playerHealthPrefab, playerHealthBar.transform);
-    }
-
-    public void RemovePlayerHp()
-    {
-        Destroy(playerHealthBar.transform.GetChild(playerHealthBar.transform.childCount - 1).gameObject);
-    }
-
-    public void AddPlayerArmor()
-    {
-        Instantiate(playerArmorPrefab, playerArmorBar.transform);
-    }
-
-    public void RemovePlayerArmor()
-    {
-        Destroy(playerArmorBar.transform.GetChild(playerArmorBar.transform.childCount - 1).gameObject);
-    }
-
-   
 }

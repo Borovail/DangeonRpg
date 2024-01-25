@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,15 +8,24 @@ public class HealthBar : MonoBehaviour
 {
     public Image fillImage;
 
-    private RectTransform healthBar;
+    private Monster parentMonster;
 
-    private void Awake()
+    private void Start()
     {
-        healthBar = fillImage.gameObject. GetComponent<RectTransform>();
+        parentMonster = GetComponentInParent<Monster>();
+        parentMonster.OnHealthChanged += ChangeHealth;
     }
 
-    public void ChangeHealth(float currentHp,float maxHp)
+    public void ChangeHealth(int currentHp,int maxHp)
     {
-      fillImage.fillAmount = currentHp / maxHp; 
+      fillImage.fillAmount = (float)currentHp / (float)maxHp; 
+    }
+
+    private void OnDestroy()
+    {
+        if (parentMonster != null)
+        {
+            parentMonster.OnHealthChanged -= ChangeHealth;
+        }
     }
 }

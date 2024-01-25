@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    //переделать всё под триггер зоны
-
-
-
-
     public bool isClosed = true;
 
     public Sprite closedDoor;
@@ -30,7 +25,7 @@ public class Door : MonoBehaviour, IInteractable
            
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         if (isClosed)
             OpenDoor();
@@ -38,17 +33,18 @@ public class Door : MonoBehaviour, IInteractable
             CloseDoor();
     }
 
-
     private void OpenDoor()
     {
         _doorCollider.enabled = false;
+        isClosed = false;
         _doorRenderer.sprite = openDoor;
 
     }
 
     private void CloseDoor()
     {
-        _doorCollider.enabled = false;
+        _doorCollider.enabled = true;
+        isClosed = true;
         _doorRenderer.sprite = closedDoor;
 
     }

@@ -17,7 +17,7 @@ public class Torch : MonoBehaviour, IInteractable
         _torchController = GetComponent<Animator>();
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         if(isBurning)
         {

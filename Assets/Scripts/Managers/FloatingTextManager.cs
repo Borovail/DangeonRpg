@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FloatingTextManager : MonoBehaviour
+public class FloatingTextManager : Singleton<FloatingTextManager>
 {
-    public static FloatingTextManager instance;
-
     public Transform UICanvas;
     public Transform WorldCanvas;
 
@@ -13,17 +11,9 @@ public class FloatingTextManager : MonoBehaviour
     public GameObject WorldSpaceFloatingText;
 
 
-    private List<FloatingText> floatingTextList = new List<FloatingText>();
+    private List<FloatingText> floatingTextList = new();
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(instance);
-        }
-
-        instance = this;
-    }
+   
 
     private void Update()
     {
