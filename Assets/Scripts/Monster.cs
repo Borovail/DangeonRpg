@@ -24,7 +24,7 @@ public class Monster : MonoBehaviour, IAttackable
 
         if (attackCooldown <= 0)
         {
-           player.gameObject.GetComponent<IAttackable>().GetHit( attackDamage,attackPushForce);
+           player.gameObject.GetComponent<IAttackable>().GetHit(attackDamage,attackPushForce,transform.position);
 
             attackCooldown = 0.5f;
         }
@@ -35,7 +35,7 @@ public class Monster : MonoBehaviour, IAttackable
     }
 
 
-    public void GetHit(int damage,float pushForce)
+    public void GetHit(int damage,float pushForce, Vector3 attackerPosition)
     {
         if(CurrentHp-damage<=0)
         {
@@ -45,7 +45,7 @@ public class Monster : MonoBehaviour, IAttackable
 
         CurrentHp -= damage;
         OnHealthChanged?.Invoke(CurrentHp, maxHp); 
-        GetComponent<PushAble>().Push(Vector2.left, pushForce);
+        GetComponent<PushAble>().Push((transform.position-attackerPosition).normalized, pushForce);
     }
 
 

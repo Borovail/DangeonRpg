@@ -26,7 +26,7 @@ public class Player : MonoBehaviour, IAttackable
     {
         playerRenderer = GetComponent<SpriteRenderer>();
         sword = GetComponentInChildren<Sword>();
-        GameManager.Instance.OnPlayerCoinsChanged += (amount) => Coins = amount;
+        GameManager.Instance.OnPlayerCoinsChanged += (amount) => Coins += amount;
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, IAttackable
 
     public void BuySword()
     {
-        GameManager.Instance.PlayerCoinsChanged(GameManager.Instance.swords[GameManager.Instance.currentSwordId].price);
+        GameManager.Instance.PlayerCoinsChanged(-GameManager.Instance.swords[GameManager.Instance.currentSwordId].price);
         OnPlayerBuyNewSword?.Invoke();
     }
 
@@ -62,9 +62,9 @@ public class Player : MonoBehaviour, IAttackable
         OnAttackEnd?.Invoke();
     }
 
-    public void GetHit(int damage, float pushForce)
+    public void GetHit(int damage, float pushForce, Vector3 attackerPosition)
     {
-        GetComponent<PushAble>().Push(Vector2.right, pushForce);
+        GetComponent<PushAble>().Push((transform.position-attackerPosition).normalized, pushForce);
 
         if (Armor > 0)
         {

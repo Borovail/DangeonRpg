@@ -16,7 +16,7 @@ public class PushAble : MonoBehaviour
     public void Push(Vector2 direction,float pushForce)
     {
         pushTime = 0f;
-        targetPosition = (Vector2)transform.position + direction.normalized * (pushForce * (1-pushResistance));
+        targetPosition = (Vector2)transform.position + direction * (pushForce * (1-pushResistance));
         StartCoroutine(PushRoutine());
     }
 

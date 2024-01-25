@@ -46,6 +46,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdatePlayerCoins(int coins)
     {
-        playerCoins.text = coins.ToString();
+        playerCoins.text =(int.Parse(playerCoins.text)+ coins).ToString();
     }
 }
