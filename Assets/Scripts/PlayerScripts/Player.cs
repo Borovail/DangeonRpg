@@ -13,8 +13,6 @@ public class Player : MonoBehaviour, IAttackable
     public event Action OnAttackEnd;
 
 
-    public event Action<int> OnHealthChanged;
-    public event Action<int> OnArmorChanged;
     public event Action OnPlayerBuyNewSword;
     public event Action OnPlayerDie;
 
@@ -26,7 +24,10 @@ public class Player : MonoBehaviour, IAttackable
     {
         playerRenderer = GetComponent<SpriteRenderer>();
         sword = GetComponentInChildren<Sword>();
+
         GameManager.Instance.OnPlayerCoinsChanged += (amount) => Coins += amount;
+        GameManager.Instance.OnHealthChanged += (amount) => Health += amount;
+        GameManager.Instance.OnArmorChanged += (amount) => Armor += amount;
     }
 
     private void Update()
@@ -68,8 +69,7 @@ public class Player : MonoBehaviour, IAttackable
 
         if (Armor > 0)
         {
-            Armor -= 1;
-            OnArmorChanged?.Invoke(Armor);
+            GameManager.Instance.PlayerArmorChanged(-1);
             StartCoroutine(GetHitAnimation(Color.cyan));
             return;
         }
@@ -82,8 +82,7 @@ public class Player : MonoBehaviour, IAttackable
             return;
         }
 
-        Health -= damage;
-        OnHealthChanged?.Invoke(Health);
+       GameManager.Instance.PlayerHealthChanged(-damage);
 
         StartCoroutine(GetHitAnimation(Color.red));
     }

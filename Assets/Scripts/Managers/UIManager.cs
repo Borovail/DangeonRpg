@@ -11,24 +11,26 @@ public class UIManager : MonoBehaviour
     public Image playerHealthPrefab;
     public GridLayoutGroup playerArmorBar;
     public Image playerArmorPrefab;
+    public GridLayoutGroup playerEffectsBar;
+    public GameObject HpEffect;
+    public GameObject ArmorEffect;
 
-    public Player Player;
 
     private void Start()
     {
-        Player.OnHealthChanged += (health) => UpdatePlayerAttribute(health, playerHealthBar, playerHealthPrefab);
-        Player.OnArmorChanged += (armor) => UpdatePlayerAttribute(armor, playerArmorBar, playerArmorPrefab);
+       GameManager.Instance.OnHealthChanged += (health) => UpdatePlayerAttribute(health, playerHealthBar, playerHealthPrefab);
+        GameManager.Instance.OnArmorChanged += (armor) => UpdatePlayerAttribute(armor, playerArmorBar, playerArmorPrefab);
         GameManager.Instance.OnPlayerCoinsChanged +=(amount)=> UpdatePlayerCoins(amount);
+        GameManager.Instance.OnPlayerGetsEffect += (effectIconPrefab) => HandlePlayerGetsEffect(effectIconPrefab);
+        GameManager.Instance.OnPlayerEffectEnds += (effectIcon) => HandlePlayerEffectEnds(effectIcon);
 
-        UpdatePlayerAttribute(Player.Health, playerHealthBar, playerHealthPrefab);
-        UpdatePlayerAttribute(Player.Armor, playerArmorBar, playerArmorPrefab);
-        UpdatePlayerCoins(Player.Coins);
+
     }
 
     private void UpdatePlayerAttribute(int value, GridLayoutGroup bar, Image prefab)
     {
         int currentCount = bar.transform.childCount;
-        int requiredCount = Mathf.Clamp(value, 0, int.MaxValue);
+        int requiredCount = Mathf.Clamp(currentCount + value, 0, int.MaxValue);
 
         for (int i = currentCount; i != requiredCount;)
         {
@@ -43,6 +45,21 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    private void HandlePlayerGetsEffect(GameObject effectIcon)
+    {
+        effectIcon.SetActive(true);
+        effectIcon.transform.SetAsFirstSibling();
+    }
+
+    private void HandlePlayerEffectEnds(GameObject effectIcon)
+    {
+        effectIcon.SetActive(false);
+    }
+
+
+
+
 
     private void UpdatePlayerCoins(int coins)
     {

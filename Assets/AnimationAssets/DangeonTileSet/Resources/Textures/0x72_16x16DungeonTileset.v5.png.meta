@@ -527,7 +527,7 @@ TextureImporter:
         width: 34
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -548,7 +548,7 @@ TextureImporter:
         width: 34
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -569,7 +569,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -577,6 +577,48 @@ TextureImporter:
       bones: []
       spriteID: 0d61523e4fe04054a8d4ba4cc6b7a371
       internalID: -1266992534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healing_fountain
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 167
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3eeafa1d36c841646975ffac1f9d1e68
+      internalID: 60654187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0x72_16x16DungeonTileset.v5_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 167
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94e424b0790ed6a47af58a48ed338e3b
+      internalID: -1149838425
       vertices: []
       indices: 
       edges: []
@@ -593,6 +635,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       0x72_16x16DungeonTileset.v5_0: 1495504802
+      0x72_16x16DungeonTileset.v5_1: -1149838425
       Door_Closed: -1266992534
       Door_Open: -456583383
       box_1: 246347506
@@ -609,6 +652,7 @@ TextureImporter:
       columns_in_wall_2: -482110884
       double_box_1: 403877186
       double_box_2: 1853023498
+      healing_fountain: 60654187
       open_door_1: -343821516
       open_door_2: 615484373
       open_door_3: 967413582

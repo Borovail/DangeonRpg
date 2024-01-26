@@ -8,12 +8,37 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public event Action<int> OnPlayerCoinsChanged;
+    public event Action<int> OnHealthChanged;
+    public event Action<int> OnArmorChanged;
+    public event Action<GameObject> OnPlayerGetsEffect;
+    public event Action<GameObject> OnPlayerEffectEnds;
+
 
     public void PlayerCoinsChanged(int amount)
     {
         OnPlayerCoinsChanged?.Invoke(amount);
     }
     
+    public void PlayerHealthChanged(int amount)
+    {
+        OnHealthChanged?.Invoke(amount);
+    }
+
+    public void PlayerArmorChanged(int amount)
+    {
+        OnArmorChanged?.Invoke(amount);
+    }
+
+    public void PlayerGetsEffect(GameObject effectIcon)
+    {
+        OnPlayerGetsEffect?.Invoke(effectIcon);
+    }
+
+    public void PlayerEffectEnds(GameObject effectIcon)
+    {
+        OnPlayerEffectEnds?.Invoke(effectIcon);
+    }
+
 
 
 
