@@ -15,6 +15,15 @@ public class UIManager : MonoBehaviour
     public GameObject HpEffect;
     public GameObject ArmorEffect;
 
+    public AnimationClip playerDieAnimation;
+
+
+    private Animator UIAnimator;
+
+    private void Awake()
+    {
+        UIAnimator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -23,6 +32,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnPlayerCoinsChanged +=(amount)=> UpdatePlayerCoins(amount);
         GameManager.Instance.OnPlayerGetsEffect += (effectIconPrefab) => HandlePlayerGetsEffect(effectIconPrefab);
         GameManager.Instance.OnPlayerEffectEnds += (effectIcon) => HandlePlayerEffectEnds(effectIcon);
+        GameManager.Instance.OnPlayerDie += () => UIAnimator.Play(playerDieAnimation.name,-1,0f) ;
 
 
     }

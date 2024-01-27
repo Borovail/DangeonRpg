@@ -34,7 +34,14 @@ public class MonsterAI : MonoBehaviour
         contactFilter.SetLayerMask(playerLayer);
         contactFilter.useLayerMask = true;
         collidersResult = new Collider2D[1];
+
     }
+
+    public void Start()
+    {
+        GameManager.Instance.OnPlayerDie += () => enabled = false;
+    }
+
 
 
     private void FixedUpdate()

@@ -10,13 +10,15 @@ public class Player : MonoBehaviour, IAttackable
     public int Coins;
     public int Armor;
 
+    public bool hasKey = false;
+
     public event Action OnAttackEnd;
 
 
     public event Action OnPlayerBuyNewSword;
-    public event Action OnPlayerDie;
 
     private bool isAttacking = false;
+
     private SpriteRenderer playerRenderer;
     private Sword sword;
 
@@ -77,8 +79,8 @@ public class Player : MonoBehaviour, IAttackable
         if (Health - damage <= 0)
         {
             Health = 0;
-            OnPlayerDie?.Invoke();
             Destroy(gameObject);
+        GameManager.Instance.PlayerDie();
             return;
         }
 

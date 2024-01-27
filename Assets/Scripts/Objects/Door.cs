@@ -5,6 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour, IInteractable
 {
     public bool isClosed = true;
+    public bool isKeyRequired = false;
 
     public Sprite closedDoor;
     public Sprite openDoor;
@@ -28,7 +29,17 @@ public class Door : MonoBehaviour, IInteractable
     public void Interact(Player player)
     {
         if (isClosed)
+        {
+            if(!isKeyRequired)
             OpenDoor();
+            else
+            {
+                if (player.hasKey)
+                    OpenDoor();
+                else
+                    FloatingTextManager.Instance.Show(new FloatingTextSettings("You need a key to open this door", 2f, 20, Color.red, Vector3.up*60, transform.position, FloatingTextType.UIRelativeFloatingText));
+            }
+        }
         else
             CloseDoor();
     }

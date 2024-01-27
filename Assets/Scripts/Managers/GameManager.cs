@@ -13,6 +13,7 @@ public class GameManager : Singleton<GameManager>
     public event Action<GameObject> OnPlayerGetsEffect;
     public event Action<GameObject> OnPlayerEffectEnds;
 
+    public event Action OnPlayerDie;
 
     public void PlayerCoinsChanged(int amount)
     {
@@ -39,8 +40,15 @@ public class GameManager : Singleton<GameManager>
         OnPlayerEffectEnds?.Invoke(effectIcon);
     }
 
+    public void PlayerDie()
+    {
+        OnPlayerDie?.Invoke();
+    }
 
-
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
 
     public void RestartGame()
     {
@@ -51,6 +59,12 @@ public class GameManager : Singleton<GameManager>
     {
         Application.Quit();
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
 
     //Temporary solution
 

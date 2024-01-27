@@ -11,6 +11,11 @@ public class CameraFollow : MonoBehaviour
 
     private Vector3 cameraVelocity = Vector3.zero;
 
+    private void Start()
+    {
+        GameManager.Instance.OnPlayerDie += () => enabled = false;
+    }
+
 
     private void FixedUpdate()
     {
