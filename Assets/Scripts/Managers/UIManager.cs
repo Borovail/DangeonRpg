@@ -27,8 +27,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-       GameManager.Instance.OnHealthChanged += (health) => UpdatePlayerAttribute(health, playerHealthBar, playerHealthPrefab);
-        GameManager.Instance.OnArmorChanged += (armor) => UpdatePlayerAttribute(armor, playerArmorBar, playerArmorPrefab);
+       GameManager.Instance.OnHealthChanged += (health,maxHealth) => UpdatePlayerAttribute(health,maxHealth ,playerHealthBar, playerHealthPrefab);
+        GameManager.Instance.OnArmorChanged += (armor, maxArmor) => UpdatePlayerAttribute(armor,maxArmor, playerArmorBar, playerArmorPrefab);
         GameManager.Instance.OnPlayerCoinsChanged +=(amount)=> UpdatePlayerCoins(amount);
         GameManager.Instance.OnPlayerGetsEffect += (effectIconPrefab) => HandlePlayerGetsEffect(effectIconPrefab);
         GameManager.Instance.OnPlayerEffectEnds += (effectIcon) => HandlePlayerEffectEnds(effectIcon);
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    private void UpdatePlayerAttribute(int value, GridLayoutGroup bar, Image prefab)
+    private void UpdatePlayerAttribute(int value,int maxValue, GridLayoutGroup bar, Image prefab)
     {
         int currentCount = bar.transform.childCount;
         int requiredCount = Mathf.Clamp(currentCount + value, 0, int.MaxValue);
@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
         {
             if (i < requiredCount)
             {
+                if(i >= maxValue) return;
+
                 Instantiate(prefab, bar.transform);
                 i++;
             }

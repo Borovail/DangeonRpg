@@ -8,12 +8,15 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     public event Action<int> OnPlayerCoinsChanged;
-    public event Action<int> OnHealthChanged;
-    public event Action<int> OnArmorChanged;
+    public event Action<int,int> OnHealthChanged;
+    public event Action<int,int> OnArmorChanged;
     public event Action<GameObject> OnPlayerGetsEffect;
     public event Action<GameObject> OnPlayerEffectEnds;
 
     public event Action OnPlayerDie;
+
+    public int MaxHealth = 5;
+    public int MaxArmor = 5;
 
     public void PlayerCoinsChanged(int amount)
     {
@@ -22,12 +25,12 @@ public class GameManager : Singleton<GameManager>
     
     public void PlayerHealthChanged(int amount)
     {
-        OnHealthChanged?.Invoke(amount);
+        OnHealthChanged?.Invoke(amount,MaxHealth);
     }
 
     public void PlayerArmorChanged(int amount)
     {
-        OnArmorChanged?.Invoke(amount);
+        OnArmorChanged?.Invoke(amount,MaxArmor);
     }
 
     public void PlayerGetsEffect(GameObject effectIcon)

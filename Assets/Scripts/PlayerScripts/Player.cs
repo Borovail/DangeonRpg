@@ -10,6 +10,8 @@ public class Player : MonoBehaviour, IAttackable
     public int Coins;
     public int Armor;
 
+ 
+
     public bool hasKey = false;
 
     public event Action OnAttackEnd;
@@ -28,8 +30,21 @@ public class Player : MonoBehaviour, IAttackable
         sword = GetComponentInChildren<Sword>();
 
         GameManager.Instance.OnPlayerCoinsChanged += (amount) => Coins += amount;
-        GameManager.Instance.OnHealthChanged += (amount) => Health += amount;
-        GameManager.Instance.OnArmorChanged += (amount) => Armor += amount;
+        GameManager.Instance.OnHealthChanged += (amount, maxHeath) =>
+        {
+            if (Health + amount <= maxHeath)
+                Health += amount;
+            else
+                FloatingTextManager.Instance.Show(new FloatingTextSettings("Health is full", 2f, 16, Color.green, Vector3.up*50, transform.position, FloatingTextType.UIRelativeFloatingText));
+        };
+
+        GameManager.Instance.OnArmorChanged += (amount, maxArmor) =>
+        {
+            if(Armor+amount<maxArmor)
+            Armor += amount;
+            else
+                FloatingTextManager.Instance.Show(new FloatingTextSettings("Armor is full", 2f, 16, Color.cyan, Vector3.up*50, transform.position, FloatingTextType.UIRelativeFloatingText));
+        };
     }
 
     private void Update()

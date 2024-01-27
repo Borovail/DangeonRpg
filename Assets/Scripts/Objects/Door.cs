@@ -37,7 +37,7 @@ public class Door : MonoBehaviour, IInteractable
                 if (player.hasKey)
                     OpenDoor();
                 else
-                    FloatingTextManager.Instance.Show(new FloatingTextSettings("You need a key to open this door", 2f, 20, Color.red, Vector3.up*60, transform.position, FloatingTextType.UIRelativeFloatingText));
+                    FloatingTextManager.Instance.Show(new FloatingTextSettings("You need a key to open this door", 2f, 20, Color.green, Vector3.up*60, transform.position, FloatingTextType.UIRelativeFloatingText));
             }
         }
         else

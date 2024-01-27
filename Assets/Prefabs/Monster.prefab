@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d780ebc999883a047a6977a92ac821d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushResistance: 0.2
+  pushResistance: 0
   pushDuration: 0.15
 --- !u!114 &2051389591
 MonoBehaviour:
