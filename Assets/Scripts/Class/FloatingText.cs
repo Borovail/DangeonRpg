@@ -37,7 +37,7 @@ public class FloatingText
         if (Time.time - lastShown > duration)
             Hide();
 
-        gameObject.transform.position += motion * Time.deltaTime;
+        gameObject.transform.position += motion * Time.unscaledDeltaTime;
 
     }
 

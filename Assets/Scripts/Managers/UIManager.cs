@@ -34,10 +34,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnPlayerEffectEnds += (effectIcon) => HandlePlayerEffectEnds(effectIcon);
         GameManager.Instance.OnPlayerDie += () => UIAnimator.Play(playerDieAnimation.name,-1,0f) ;
 
-        UpdatePlayerAttribute(7,10, playerHealthBar, playerHealthPrefab);
-        UpdatePlayerAttribute(7, 10, playerArmorBar, playerArmorPrefab);
-
- 
+        GameManager.Instance.LoadUserStart();
     }
 
     private void UpdatePlayerAttribute(int value,int maxValue, GridLayoutGroup bar, Image prefab)

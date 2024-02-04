@@ -32,7 +32,7 @@ public class Sword : MonoBehaviour
         _attackableObject = collision.gameObject.GetComponent<IAttackable>();
         if (_attackableObject == null) return;
 
-        _attackableObject.GetHit(GameManager.Instance.swords[GameManager.Instance.currentSwordId].damage, pushForce,transform.position);
+        _attackableObject.GetHit(GameManager.Instance.swords[GameManager.Instance.currentSwordId].damage, GameManager.Instance.swords[GameManager.Instance.currentSwordId].pushForce, transform.position);
     }
 
     public void Attack()

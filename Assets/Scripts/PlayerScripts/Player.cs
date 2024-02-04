@@ -26,6 +26,7 @@ public class Player : MonoBehaviour, IAttackable
 
     private void Awake()
     {
+        
         playerRenderer = GetComponent<SpriteRenderer>();
         sword = GetComponentInChildren<Sword>();
 
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour, IAttackable
             else
                 FloatingTextManager.Instance.Show(new FloatingTextSettings("Armor is full", 2f, 16, Color.cyan, Vector3.up*50, transform.position, FloatingTextType.UIRelativeFloatingText));
         };
+
+
     }
 
     private void Update()
@@ -84,7 +87,8 @@ public class Player : MonoBehaviour, IAttackable
         if (Health - damage <= 0)
         {
             Health = 0;
-        GameManager.Instance.PlayerDie();
+            GameManager.Instance.PlayerHealthChanged(-damage);
+            GameManager.Instance.PlayerDie();
             Destroy(gameObject);
             return;
         }

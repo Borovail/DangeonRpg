@@ -26,6 +26,7 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
 
     public void Show(FloatingTextSettings floatingTextSettings)
     {
+        floatingTextSettings.duration /= 2;
         var floatingText = GetFloatingText(floatingTextSettings.floatingTextType);
             
         floatingText.SetFloatingTextSettings(floatingTextSettings);
@@ -36,7 +37,6 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
     private FloatingText GetFloatingText(FloatingTextType floatingTextType)
     {
         var txt = floatingTextList.Find(t => !t.active && t.floatingTextType == floatingTextType);
-
         if (txt == null)
         {
             txt = new FloatingText();

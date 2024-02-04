@@ -421,7 +421,7 @@ MonoBehaviour:
   maxHp: 5
   attackDamage: 1
   attackPushForce: 0.3
-  attackCooldown: 0
+  attackCooldown: 1
 --- !u!114 &2051389583
 MonoBehaviour:
   m_ObjectHideFlags: 0

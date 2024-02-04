@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
 
     public void PauseGame()
     {
-  
+        Time.timeScale = 0;
     }
 
 
@@ -75,7 +75,7 @@ public class GameManager : Singleton<GameManager>
     string[] phrases = new string[] {
     "Something went wrong, try again",
     "Nah",
-    "Seems like that stuff is not implemented yet, but go ahead, try again",
+    "Seems like that stuff is not implemented yet",
     "It is definitely not implemented yet!",
     "Alright, alright, stop it, enough.",
     "Seriously, stop!!!",
@@ -111,7 +111,7 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
 
-        FloatingTextManager.Instance.Show(new FloatingTextSettings(phrases[clickCounter], 5f, 20, Color.red, motion *40, position.position, FloatingTextType.UIRelativeFloatingText));
+        FloatingTextManager.Instance.Show(new FloatingTextSettings(phrases[clickCounter], 2f, 20, Color.red, motion *60, position.position, FloatingTextType.UIRelativeFloatingText));
 
         clickCounter++;
 
@@ -136,5 +136,19 @@ public class GameManager : Singleton<GameManager>
     public Weapon[] swords;
 
     [HideInInspector] public int currentSwordId = 0;
+
+
+
+
+
+
+
+    public void LoadUserStart() 
+    { 
+        PlayerCoinsChanged(11110);
+        PlayerHealthChanged(3);
+        PlayerArmorChanged(3);
+    }
+
 
 }
