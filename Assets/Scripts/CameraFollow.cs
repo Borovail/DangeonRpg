@@ -7,11 +7,19 @@ public class CameraFollow : MonoBehaviour
 
     public float smoothTime = 0.3f;
 
+    public GameObject player;
+
     private Vector3 cameraVelocity = Vector3.zero;
+
+    private void Start()
+    {
+        GameManager.Instance.OnPlayerDie += () => enabled = false;
+    }
+
 
     private void FixedUpdate()
     {
-        Vector3 playerPosition = GameManager.instance.player.transform.position;
+        Vector3 playerPosition = player.transform.position;
         Vector3 cameraPosition = transform.position;
 
         Vector3 offset = playerPosition - cameraPosition;

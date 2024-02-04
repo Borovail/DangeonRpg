@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    //переделать всё под триггер зоны
-
-
-
-
     public bool isClosed = true;
+    public bool isKeyRequired = false;
 
     public Sprite closedDoor;
     public Sprite openDoor;
@@ -30,25 +26,36 @@ public class Door : MonoBehaviour, IInteractable
            
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         if (isClosed)
+        {
+            if(!isKeyRequired)
             OpenDoor();
+            else
+            {
+                if (player.hasKey)
+                    OpenDoor();
+                else
+                    FloatingTextManager.Instance.Show(new FloatingTextSettings("You need a key to open this door", 2f, 20, Color.green, Vector3.up*60, transform.position, FloatingTextType.UIRelativeFloatingText));
+            }
+        }
         else
             CloseDoor();
     }
 
-
     private void OpenDoor()
     {
         _doorCollider.enabled = false;
+        isClosed = false;
         _doorRenderer.sprite = openDoor;
 
     }
 
     private void CloseDoor()
     {
-        _doorCollider.enabled = false;
+        _doorCollider.enabled = true;
+        isClosed = true;
         _doorRenderer.sprite = closedDoor;
 
     }

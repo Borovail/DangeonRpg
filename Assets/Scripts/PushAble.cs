@@ -13,18 +13,27 @@ public class PushAble : MonoBehaviour
     private float pushTime = 0f;
     private Vector3 targetPosition = Vector3.zero;
 
+    private Rigidbody2D rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     public void Push(Vector2 direction,float pushForce)
     {
-        targetPosition = (Vector2)transform.position + direction.normalized * (pushForce * (1-pushResistance));
+        pushTime = 0f;
+        targetPosition = (Vector2)transform.position + direction * (pushForce * (1-pushResistance));
         StartCoroutine(PushRoutine());
     }
 
     private IEnumerator PushRoutine()
     {
-        if (pushTime < pushDuration)
+        while (pushTime < pushDuration)
         {
             pushTime += Time.deltaTime;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, pushTime/pushDuration);
+            Vector2 newPosition = Vector2.Lerp(rb.position, targetPosition, pushTime / pushDuration);
+            rb.MovePosition(newPosition);
             yield return null;
         }
     }

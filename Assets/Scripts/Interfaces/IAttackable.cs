@@ -1,5 +1,7 @@
-﻿public interface IAttackable
+﻿using UnityEngine;
+
+public interface IAttackable
 {
-     void GetHit(float damage);
+     void GetHit(int damage,float pushForce,Vector3 attackerPosition);
 }
 

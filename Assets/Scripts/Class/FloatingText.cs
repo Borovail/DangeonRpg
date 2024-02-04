@@ -1,67 +1,19 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-
-//public class FloatingText
-//{
-//    public bool active;
-//    public GameObject gameObject;
-//    public Text text;
-//    public Vector3 motion;
-//    public float duration;
-//    public float lastShown;
-
-//    public void Show()
-//    {
-//        active = true;
-//        lastShown = Time.time;
-//        gameObject.SetActive(true);
-
-//    }
-
-//    public void Hide()
-//    {
-//        active = false;
-//        gameObject.SetActive(false);
-
-//    }
-
-//    public void UpdateFloatingText()
-//    {
-//        if (!active) return;
-
-//        if (Time.time - lastShown > duration)
-//            Hide();
-
-//        gameObject.transform.position += motion * Time.deltaTime;
-
-//    }
-//}
-//// Dynamic text works
-
-
-
-
-
-
-
-/////static text works
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FloatingText
 {
-    public bool active;
     public GameObject gameObject;
-    public Text text;
-    public Vector3 motion;
+    public Text floatingText;
+
+    public bool active;
     public float duration;
     public float lastShown;
+
+    public Vector3 motion;
+
     public FloatingTextType floatingTextType;
+
 
     public void Show()
     {
@@ -85,8 +37,25 @@ public class FloatingText
         if (Time.time - lastShown > duration)
             Hide();
 
-        gameObject.transform.position += motion * Time.deltaTime;
+        gameObject.transform.position += motion * Time.unscaledDeltaTime;
 
+    }
+
+    public void SetFloatingTextSettings(FloatingTextSettings floatingTextSettings)
+    {
+        floatingText.text = floatingTextSettings.message;
+        floatingText.fontSize = floatingTextSettings.fontSize;
+        floatingText.color = floatingTextSettings.color;
+
+        motion = floatingTextSettings.motion;
+        duration = floatingTextSettings.duration;
+        floatingTextType = floatingTextSettings.floatingTextType;
+
+
+        if (floatingTextSettings.floatingTextType == FloatingTextType.UIRelativeFloatingText)
+            gameObject.transform.position = Camera.main.WorldToScreenPoint(floatingTextSettings.position);
+        else
+            gameObject.transform.position = floatingTextSettings.position;
     }
 }
 

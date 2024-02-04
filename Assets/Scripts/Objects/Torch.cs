@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
+
 using UnityEngine;
 
 public class Torch : MonoBehaviour, IInteractable
@@ -17,7 +15,7 @@ public class Torch : MonoBehaviour, IInteractable
         _torchController = GetComponent<Animator>();
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         if(isBurning)
         {

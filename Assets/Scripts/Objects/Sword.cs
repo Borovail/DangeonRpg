@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,40 +6,49 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     public AnimationClip attackAnimation;
+    public float pushForce = 1f;
 
-    private Animator animator;
+    private Animator _animator;
     private Collider2D _collider;
+    private SpriteRenderer _swordRenderer;
+    private IAttackable _attackableObject;
 
-    private IAttackable attackableObject;
 
-
-    private void Awake()
+    private void Start()
     {
-       animator =  gameObject.GetComponentInParent<Animator>();
-        _collider =  gameObject.GetComponent<Collider2D>();
-    }
+        _animator = GetComponentInParent<Animator>();
+        _collider = GetComponent<Collider2D>();
+        _swordRenderer = GetComponent<SpriteRenderer>();
 
+        var player = GetComponentInParent<Player>();
+        player.OnAttackEnd += HandleAttackEnd;
+        player.OnPlayerBuyNewSword += HandleSkinChange;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        attackableObject = collision.gameObject.GetComponent<IAttackable>();
+        _collider.isTrigger = true;
 
-        if (attackableObject == null) return;
+        _attackableObject = collision.gameObject.GetComponent<IAttackable>();
+        if (_attackableObject == null) return;
 
-
-        attackableObject.GetHit(GameManager.instance.swords[GameManager.instance.currentSwordId].damage);
-        _collider.enabled = false;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        attackableObject = null;
+        _attackableObject.GetHit(GameManager.Instance.swords[GameManager.Instance.currentSwordId].damage, GameManager.Instance.swords[GameManager.Instance.currentSwordId].pushForce, transform.position);
     }
 
     public void Attack()
     {
-        animator.Play(attackAnimation.name, -1, 0f);
+        _animator.Play(attackAnimation.name, -1, 0f);
     }
 
- 
+    private void HandleAttackEnd()
+    {
+        // Коллайдер остаётся выключенным после удара до начала следующей атаки
+        _attackableObject = null;
+        _collider.isTrigger = false;
+    }
+
+    private void HandleSkinChange()
+    {
+        _swordRenderer.sprite = GameManager.Instance.swords[GameManager.Instance.currentSwordId].skin;
+    }
 }

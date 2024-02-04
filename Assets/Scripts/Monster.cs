@@ -1,77 +1,60 @@
+using System;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, IAttackable
 {
-    public float triggerRange;
-    public float chaseRange;
-    public float chaseSpeed;
-    public float returningSpeed;
+    public int CurrentHp;
+    public int maxHp;
 
-    public LayerMask playerLayer;
+    public int attackDamage =1;
+    public float attackPushForce = 0.3f;
 
-    private Vector3 triggerPoint;
-    private Vector3 chaseDirection;
-    private Vector3 playerPosition;
+    public float attackCooldown =1f;
 
+    public event Action<int,int> OnHealthChanged;
 
-    private bool isTriggered = false;
-
-    private Collider2D monsterCollider;
-    private ContactFilter2D contactFilter;
-    private Collider2D[] collidersResult;
-    private void Awake()
+    private void Start()
     {
-        triggerPoint = transform.position;
-
-        monsterCollider = GetComponent<Collider2D>();
-        contactFilter.SetLayerMask(playerLayer);
-        contactFilter.useLayerMask = true;
-        collidersResult = new Collider2D[1];
+        var ai = GetComponent<MonsterAI>();
+        ai.OnPlayerReached += Attack;
     }
 
-    private void FixedUpdate()
+    private void Attack(Collider2D player)
     {
-        playerPosition = GameManager.instance.player.transform.position;
-        float sqrDistanceToPlayer = (triggerPoint - playerPosition).sqrMagnitude;
 
-        if (sqrDistanceToPlayer < triggerRange * triggerRange)
+        if (attackCooldown <= 0)
         {
-            isTriggered = true;
+           player.gameObject.GetComponent<IAttackable>().GetHit(attackDamage,attackPushForce,transform.position);
+
+            attackCooldown = 0.5f;
         }
-
-        if (isTriggered)
+        else
         {
-            if (sqrDistanceToPlayer < chaseRange * chaseRange)
-                ChasePlayer();
-            else
-                ReturnToTriggerPoint();
+            attackCooldown -= Time.deltaTime;
         }
     }
 
-    private void ChasePlayer()
+
+    public void GetHit(int damage,float pushForce, Vector3 attackerPosition)
     {
-       int  collidersCount= Physics2D.OverlapCollider(monsterCollider, contactFilter, collidersResult);
-        if (collidersCount != 0) return;
+        if(CurrentHp-damage<=0)
+        {
+            Destroy(gameObject); 
+            return;
+        }
 
-           chaseDirection = (playerPosition - transform.position).normalized;
-            transform.position += chaseDirection * chaseSpeed * Time.deltaTime;
-
-    }
-
-    private void ReturnToTriggerPoint()
-    {
-        chaseDirection = (triggerPoint - transform.position).normalized;
-        transform.position += chaseDirection * returningSpeed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, triggerPoint) < 0.1f)
-            isTriggered = false;
-
+        CurrentHp -= damage;
+        OnHealthChanged?.Invoke(CurrentHp, maxHp); 
+        GetComponent<PushAble>().Push((transform.position-attackerPosition).normalized, pushForce);
     }
 
 
-   public void GetHit(float damage)
+    private void OnDestroy()
     {
-        Debug.Log(gameObject.name + " get hit with: " + damage+ " damage");
-        GetComponent<PushAble>().Push(Vector2.left,2);
+        var ai = GetComponent<MonsterAI>();
+        if (ai != null)
+        {
+            ai.OnPlayerReached -= Attack;
+        }
     }
 }

@@ -10,18 +10,18 @@ public class SwordStatue :MonoBehaviour
 
     private void Start()
     {
-        SetSword();
-        SetPrice();
+        SetSword(1);
+        SetPrice(1);
     }
 
-    private void SetSword()
+    private void SetSword(int index)
     {
-        sword.sprite = GameManager.instance.swords[GameManager.instance.currentSwordId].skin;
+        sword.sprite = GameManager.Instance.swords[index].skin;
     }
 
-    private void SetPrice()
+    private void SetPrice(int index)
     {
-        upgradePrice.text = GameManager.instance.swords[GameManager.instance.currentSwordId].price.ToString();
+        upgradePrice.text = GameManager.Instance.swords[ index].price.ToString();
     }
 
     private void SetMaxPrice()
@@ -31,21 +31,29 @@ public class SwordStatue :MonoBehaviour
         upgradePrice.text = "MAX";
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
-        if (GameManager.instance.swords.Length == GameManager.instance.currentSwordId+1)
+
+        if (GameManager.Instance.swords.Length == GameManager.Instance.currentSwordId+1)
         {
-            SetMaxPrice();
+                SetMaxPrice();
             return;
         }
 
-        if (GameManager.instance.swords[GameManager.instance.currentSwordId].price <= GameManager.instance.playerCoins)
+        if (GameManager.Instance.swords[GameManager.Instance.currentSwordId+1].price <=player.Coins)
         {
-            GameManager.instance.player.BuySword();
-            GameManager.instance.currentSwordId++;
 
-            SetSword();
-            SetPrice();
+            GameManager.Instance.currentSwordId++;
+            player.BuySword();
+
+            if (GameManager.Instance.swords.Length == GameManager.Instance.currentSwordId + 1)
+            {
+                SetMaxPrice();
+                return;
+            }
+
+            SetSword(GameManager.Instance.currentSwordId+1);
+            SetPrice(GameManager.Instance.currentSwordId + 1);
 
         }
     }
