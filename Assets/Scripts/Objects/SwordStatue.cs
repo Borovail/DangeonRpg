@@ -40,7 +40,7 @@ public class SwordStatue :MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.swords[GameManager.Instance.currentSwordId].price <=player.Coins)
+        if (GameManager.Instance.swords[GameManager.Instance.currentSwordId+1].price <=player.Coins)
         {
 
             GameManager.Instance.currentSwordId++;

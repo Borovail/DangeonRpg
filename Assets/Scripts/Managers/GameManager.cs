@@ -15,8 +15,8 @@ public class GameManager : Singleton<GameManager>
 
     public event Action OnPlayerDie;
 
-    public int MaxHealth = 5;
-    public int MaxArmor = 5;
+    public int MaxHealth = 10;
+    public int MaxArmor = 10;
 
     public void PlayerCoinsChanged(int amount)
     {
@@ -56,6 +56,7 @@ public class GameManager : Singleton<GameManager>
     public void RestartGame()
     {
         SceneManager.LoadScene(0);  ///Lobby
+        ResumeGame();
     }
 
     public void QuitGame()
@@ -65,7 +66,7 @@ public class GameManager : Singleton<GameManager>
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
+  
     }
 
 
@@ -110,7 +111,7 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
 
-        FloatingTextManager.Instance.Show(new FloatingTextSettings(phrases[clickCounter], 5f, 20, Color.red, motion / 3, position.position, FloatingTextType.WorldSpaceFloatingText));
+        FloatingTextManager.Instance.Show(new FloatingTextSettings(phrases[clickCounter], 5f, 20, Color.red, motion *40, position.position, FloatingTextType.UIRelativeFloatingText));
 
         clickCounter++;
 

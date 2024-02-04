@@ -54,16 +54,6 @@ public class Player : MonoBehaviour, IAttackable
             sword.Attack();
             isAttacking = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            FloatingTextManager.Instance.Show(new FloatingTextSettings("Pidor Up", 5f, 12, Color.red, Vector3.up, transform.position, FloatingTextType.UIRelativeFloatingText));
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            FloatingTextManager.Instance.Show(new FloatingTextSettings("Pidor Down", 5f, 12, Color.red, Vector3.down, transform.position, FloatingTextType.WorldSpaceFloatingText));
-        }
     }
 
 
@@ -94,8 +84,8 @@ public class Player : MonoBehaviour, IAttackable
         if (Health - damage <= 0)
         {
             Health = 0;
-            Destroy(gameObject);
         GameManager.Instance.PlayerDie();
+            Destroy(gameObject);
             return;
         }
 

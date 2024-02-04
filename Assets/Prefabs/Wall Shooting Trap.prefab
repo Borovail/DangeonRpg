@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1141681435973973566}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: BulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 5933815428960492140}
   - component: {fileID: 6975038647082737526}
   - component: {fileID: 1475083666}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Wall Shooting Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

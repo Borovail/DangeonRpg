@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
-{
+{ 
     public Text playerCoins;
 
     public GridLayoutGroup playerHealthBar;
@@ -34,7 +34,10 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.OnPlayerEffectEnds += (effectIcon) => HandlePlayerEffectEnds(effectIcon);
         GameManager.Instance.OnPlayerDie += () => UIAnimator.Play(playerDieAnimation.name,-1,0f) ;
 
+        UpdatePlayerAttribute(7,10, playerHealthBar, playerHealthPrefab);
+        UpdatePlayerAttribute(7, 10, playerArmorBar, playerArmorPrefab);
 
+ 
     }
 
     private void UpdatePlayerAttribute(int value,int maxValue, GridLayoutGroup bar, Image prefab)

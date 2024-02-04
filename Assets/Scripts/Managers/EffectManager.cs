@@ -49,13 +49,13 @@ namespace Assets.Scripts.Managers
         public void ArmorRegenerationEffect()
         {
             GameManager.Instance.PlayerArmorChanged(1);
-            FloatingTextManager.Instance.Show(new FloatingTextSettings("+1", 3, 16, Color.blue, Vector3.up * 80, _fountainPosition, FloatingTextType.UIRelativeFloatingText));
+            FloatingTextManager.Instance.Show(new FloatingTextSettings("+1", 3, 4, Color.blue, Vector3.up /2, _fountainPosition, FloatingTextType.WorldSpaceFloatingText));
         }
 
         public void HealthRegenerationEffect()
         {
             GameManager.Instance.PlayerHealthChanged(1);
-            FloatingTextManager.Instance.Show(new FloatingTextSettings("+1", 3, 20, Color.red, Vector3.up * 80, _fountainPosition, FloatingTextType.UIRelativeFloatingText));
+            FloatingTextManager.Instance.Show(new FloatingTextSettings("+1", 3, 4, Color.red, Vector3.up/2, _fountainPosition, FloatingTextType.WorldSpaceFloatingText));
         }
     }
 }

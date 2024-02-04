@@ -14,6 +14,7 @@ public class Chest : MonoBehaviour, IInteractable
         isLooted = true;
 
        gameObject.GetComponent<SpriteRenderer>().sprite = emptyChest;
+       gameObject.GetComponent<CircleCollider2D>().enabled = false;
        GameManager.Instance.PlayerCoinsChanged(coinsAmount);
         FloatingTextManager.Instance.Show(new FloatingTextSettings($"+{coinsAmount} coins", 2f, 4, Color.yellow, Vector3.up/2, transform.position, FloatingTextType.WorldSpaceFloatingText));
     }
