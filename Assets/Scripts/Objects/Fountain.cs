@@ -5,9 +5,11 @@ public class Fountain : MonoBehaviour
 {
     public float effectCooldown = 5f;
     public FountainType fountainType;
+    public LayerMask playerLayer;
     public Animator[] torchAnimators;
 
     public AnimationClip[] torchAnimationClips;
+    
 
     private float startTime = 0f;
     private bool isFountainTriggered = false;
@@ -34,6 +36,8 @@ public class Fountain : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+       if((playerLayer & (1 << collision.gameObject.layer)) == 0) return;
+
         EffectManager.Instance.ApplyFountainEffect(fountainType,startTime,effectCooldown,transform.position  + new Vector3( 0.25f,-0.25f,0f));
         TurnOnTorches();
         startTime = effectCooldown;
@@ -42,6 +46,8 @@ public class Fountain : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if ((playerLayer & (1 << collision.gameObject.layer)) == 0) return;
+
         EffectManager.Instance.CancelFountainEffect(fountainType);
         TurnOffTorches();
 
