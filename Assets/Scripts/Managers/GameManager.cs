@@ -145,7 +145,7 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadUserStart() 
     { 
-        PlayerCoinsChanged(1000);
+        PlayerCoinsChanged(0);
         PlayerHealthChanged(3);
         PlayerArmorChanged(3);
     }

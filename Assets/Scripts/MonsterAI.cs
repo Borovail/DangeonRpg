@@ -53,7 +53,7 @@ public class MonsterAI : MonoBehaviour
         playerPosition = player.transform.position;
         float sqrDistanceToPlayer = (triggerPoint - playerPosition).sqrMagnitude;
 
-        if (sqrDistanceToPlayer < triggerRange * triggerRange)
+        if (sqrDistanceToPlayer < triggerRange * triggerRange && !isTriggered)
         {
             isTriggered = true;
             AudioManager.Instance.PlaySound(SoundType.MonsterRoar, 0.4f);

@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: DangeonRPG
-  defaultCursor: {fileID: 2800000, guid: 8da4636595585bb4196010a0a853e98e, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 9d27e78ebd6faa241adc1361affe8144, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
