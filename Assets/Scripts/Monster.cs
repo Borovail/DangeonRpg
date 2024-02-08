@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public class Monster : MonoBehaviour, IAttackable
     {
         if(CurrentHp-damage<=0)
         {
+            AudioManager.Instance.PlaySound(SoundType.MonsterDies, 1);
             Destroy(gameObject); 
             return;
         }

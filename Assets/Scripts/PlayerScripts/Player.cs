@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour, IAttackable
 
         if (Armor > 0)
         {
+            AudioManager.Instance.PlaySound(SoundType.GetHitWithArmor, 1);
             GameManager.Instance.PlayerArmorChanged(-1);
             StartCoroutine(GetHitAnimation(Color.cyan));
             return;
@@ -87,15 +89,17 @@ public class Player : MonoBehaviour, IAttackable
         if (Health - damage <= 0)
         {
             Health = 0;
+            AudioManager.Instance.PlaySound(SoundType.GameOver, 1);
             GameManager.Instance.PlayerHealthChanged(-damage);
             GameManager.Instance.PlayerDie();
             Destroy(gameObject);
             return;
         }
 
+        AudioManager.Instance.PlaySound(SoundType.GetHitWithoutArmor, 1);
        GameManager.Instance.PlayerHealthChanged(-damage);
-
         StartCoroutine(GetHitAnimation(Color.red));
+
     }
 
     private IEnumerator GetHitAnimation(Color color)

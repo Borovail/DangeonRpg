@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,7 @@ public class SwordStatue :MonoBehaviour
         if (GameManager.Instance.swords[GameManager.Instance.currentSwordId+1].price <=player.Coins)
         {
 
+            AudioManager.Instance.PlaySound(SoundType.BuySword, 0.7f);
             GameManager.Instance.currentSwordId++;
             player.BuySword();
 

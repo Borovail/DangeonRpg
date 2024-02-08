@@ -436,6 +436,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushResistance: 0
   pushDuration: 0.15
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1088
 --- !u!114 &2051389591
 MonoBehaviour:
   m_ObjectHideFlags: 0

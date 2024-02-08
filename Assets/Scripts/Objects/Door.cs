@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,9 +36,13 @@ public class Door : MonoBehaviour, IInteractable
             else
             {
                 if (player.hasKey)
+                {
                     OpenDoor();
+                }
                 else
+                {
                     FloatingTextManager.Instance.Show(new FloatingTextSettings("You need a key to open this door", 2f, 20, Color.green, Vector3.up*60, transform.position, FloatingTextType.UIRelativeFloatingText));
+                }
             }
         }
         else

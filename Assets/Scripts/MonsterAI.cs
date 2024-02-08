@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ public class MonsterAI : MonoBehaviour
     private ContactFilter2D contactFilter;
     private Collider2D[] collidersResult;
 
+    private Rigidbody2D rb;
+
     private bool isTriggered = false;
 
     private void Awake()
@@ -34,6 +37,7 @@ public class MonsterAI : MonoBehaviour
         contactFilter.SetLayerMask(playerLayer);
         contactFilter.useLayerMask = true;
         collidersResult = new Collider2D[1];
+        rb = GetComponent<Rigidbody2D>();
 
     }
 
@@ -52,6 +56,7 @@ public class MonsterAI : MonoBehaviour
         if (sqrDistanceToPlayer < triggerRange * triggerRange)
         {
             isTriggered = true;
+            AudioManager.Instance.PlaySound(SoundType.MonsterRoar, 0.4f);
         }
 
         if (isTriggered)
@@ -73,14 +78,14 @@ public class MonsterAI : MonoBehaviour
         }
 
         chaseDirection = (playerPosition - transform.position).normalized;
-        transform.position += chaseSpeed * Time.deltaTime * chaseDirection;
+        rb.velocity = chaseSpeed * chaseDirection;
 
     }
 
     private void ReturnToTriggerPoint()
     {
         chaseDirection = (triggerPoint - transform.position).normalized;
-        transform.position += returningSpeed * Time.deltaTime * chaseDirection;
+        rb.velocity = returningSpeed * chaseDirection;
 
         if (Vector3.Distance(transform.position, triggerPoint) < 0.1f)
             isTriggered = false;

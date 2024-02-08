@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Chest : MonoBehaviour, IInteractable
         if (isLooted) return;
         isLooted = true;
 
+        AudioManager.Instance.PlaySound(SoundType.LootChest,0.8f);
        gameObject.GetComponent<SpriteRenderer>().sprite = emptyChest;
        gameObject.GetComponent<CircleCollider2D>().enabled = false;
        GameManager.Instance.PlayerCoinsChanged(coinsAmount);

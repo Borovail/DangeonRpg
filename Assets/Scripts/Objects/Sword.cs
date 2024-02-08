@@ -1,3 +1,4 @@
+using Assets.Scripts.Class;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ public class Sword : MonoBehaviour
     public void Attack()
     {
         _animator.Play(attackAnimation.name, -1, 0f);
+        AudioManager.Instance.PlaySound(SoundType.Attack,1);
     }
 
     private void HandleAttackEnd()
