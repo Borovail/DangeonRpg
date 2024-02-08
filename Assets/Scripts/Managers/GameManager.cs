@@ -118,14 +118,14 @@ public class GameManager : Singleton<GameManager>
 
         if (clickCounter == 8)
         {
-            TheLastStraw();
+           StartCoroutine( TheLastStraw());
         }
 
     }
 
     IEnumerator TheLastStraw()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
         QuitGame();
     }
     //Temporary solution
