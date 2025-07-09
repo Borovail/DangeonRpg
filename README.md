@@ -2,8 +2,8 @@
 My First project)
 
 
-![Screenshot 2025-07-09 190915](https://github.com/user-attachments/assets/2cd43898-b462-4ddf-941c-97f49e85554e)
-![Screenshot 2025-07-09 190851](https://github.com/user-attachments/assets/8f3d0d1b-da34-4e2a-9253-9ec2fec93197)
-![Screenshot 2025-07-09 190718](https://github.com/user-attachments/assets/90adba19-f359-4664-acf8-1a1b2259ee0d)
-![Screenshot 2025-07-09 190710](https://github.com/user-attachments/assets/c86f0f26-71b6-407a-8598-f812deb12f73)
-![Screenshot 2025-07-09 191005](https://github.com/user-attachments/assets/34cd97e3-7194-489a-a5b9-f545e91260d6)
+
+![Screenshot 2025-07-09 190915](https://github.com/user-attachments/assets/e998760b-620d-4ff2-abae-2ece597d2177)
+![Screenshot 2025-07-09 190851](https://github.com/user-attachments/assets/98c484fd-3d4e-4ee3-a4e7-380172167ce8)
+![Screenshot 2025-07-09 190718](https://github.com/user-attachments/assets/5b95efab-3cbe-43de-8bc2-cd67133bae8f)
+![Screenshot 2025-07-09 190710](https://github.com/user-attachments/assets/a1f75b1d-65a4-47e7-ad1b-e69e2d9c340c)
